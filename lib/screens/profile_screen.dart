@@ -1,9 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:developer' as developer;
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gaff/api/apis.dart';
 import 'package:gaff/helper/dialogs.dart';
 import 'package:gaff/screens/auth/login_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../models/chat_user.dart';
 
@@ -18,6 +24,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
+  String? _image;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -36,28 +43,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Stack(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 0, 17, 255),
-                            width: 5,
-                          ),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: CachedNetworkImage(
-                            height: 180,
-                            width: 180,
-                            fit: BoxFit.fill,
-                            imageUrl: widget.user.image,
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.person_2_rounded),
-                          ),
-                        ),
-                      ),
+                      //for profile picture
+                      _image != null
+                          ? Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: const Color.fromARGB(255, 0, 17, 255),
+                                  width: 5,
+                                ),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.file(
+                                  File(_image!),
+                                  height: 180,
+                                  width: 180,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: const Color.fromARGB(255, 0, 17, 255),
+                                  width: 5,
+                                ),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: CachedNetworkImage(
+                                  height: 180,
+                                  width: 180,
+                                  fit: BoxFit.cover,
+                                  imageUrl: widget.user.image,
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.person_2_rounded),
+                                ),
+                              ),
+                            ),
+
                       Positioned(
                         bottom: 5,
                         right: 0,
@@ -262,7 +290,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     //camera ko lagi
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final ImagePicker picker = ImagePicker();
+                          //pick an image
+                          final XFile? image = await picker.pickImage(
+                              source: ImageSource.camera,imageQuality: 80);
+                          if (image != null) {
+                            developer.log('Image Path: ${image.path}');
+
+                            setState(() {
+                              _image = image.path;
+                            });
+                            APIs.updateProfilePicture(File(_image!));
+
+                            Navigator.pop(context);
+                          }
+                        },
                         child: Image.asset(
                           'assets/images/camera.jpg',
                           height: 90,
@@ -271,7 +314,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     //gallary ko lagi
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final ImagePicker picker = ImagePicker();
+                          //pick an image
+                          final XFile? image = await picker.pickImage(
+                              source: ImageSource.gallery,imageQuality: 80);
+                          if (image != null) {
+                            developer.log(
+                                'Image Path: ${image.path} -- MineType: ${image.mimeType}');
+
+                            setState(() {
+                              _image = image.path;
+                            });
+                            APIs.updateProfilePicture(File(_image!));
+
+                            Navigator.pop(context);
+                          }
+                        },
                         child: Image.asset(
                           'assets/images/gallary.jpg',
                           height: 90,

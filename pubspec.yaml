@@ -25,13 +25,23 @@ environment:
 dependencies:
   cached_network_image: ^3.2.3
   cloud_firestore: ^4.8.4
+
+  #for signin auth feature
   firebase_auth: ^4.7.2
+
+  #for implementing firebase
   firebase_core: ^2.15.0
+  firebase_storage: ^11.2.5
   flutter:
     sdk: flutter
 
   flutter_launcher_icons: "^0.13.1"
+
+  #for google signin feature
   google_sign_in: ^6.1.4
+
+  #for picking profile picture
+  image_picker: ^1.0.2
 
 flutter_launcher_icons:
   android: "launcher_icon"

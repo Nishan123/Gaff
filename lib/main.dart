@@ -9,6 +9,7 @@ late Size mq;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
