@@ -20,7 +20,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
       child: InkWell(
         onTap: () {},
         child: ListTile(
-            tileColor: const Color.fromARGB(193, 109, 209, 255),
+            tileColor: Color.fromARGB(135, 209, 220, 226),
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: CachedNetworkImage(
