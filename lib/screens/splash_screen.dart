@@ -19,15 +19,12 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(
-          const SystemUiOverlayStyle(
+        const SystemUiOverlayStyle(
             systemNavigationBarColor: Colors.white,
-            statusBarColor: Colors.black
-            ),
-        
-          );
+            statusBarColor: Colors.black),
+      );
       if (APIs.auth.currentUser != null) {
         log('User: ${APIs.auth.currentUser}');
-        
 
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => const HomeScreen()));
@@ -56,8 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     fontSize: 55,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 43, 20, 255),
-                    fontFamily: 'SKATERDUDES'
-                    ),
+                    fontFamily: 'SKATERDUDES'),
               ),
               Text(
                 "Powered by 2kSoft\nUsing Flutter",

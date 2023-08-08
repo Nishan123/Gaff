@@ -66,7 +66,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Color.fromARGB(255, 151, 149, 255),
                               borderRadius: BorderRadius.circular(40)),
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _showBottomSheet();
+                            },
                             icon: Icon(
                               Icons.edit,
                               color: Colors.black,
@@ -235,5 +237,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  void _showBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        builder: (_) {
+          return ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(top: 20, bottom: 100),
+            children: [
+              const Text(
+                "Choose your profile Picture",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+                textAlign: TextAlign.center,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    //camera ko lagi
+                    ElevatedButton(
+                        onPressed: () {},
+                        child: Image.asset(
+                          'assets/images/camera.jpg',
+                          height: 90,
+                          width: 100,
+                        )),
+
+                    //gallary ko lagi
+                    ElevatedButton(
+                        onPressed: () {},
+                        child: Image.asset(
+                          'assets/images/gallary.jpg',
+                          height: 90,
+                          width: 100,
+                        )),
+                  ],
+                ),
+              )
+            ],
+          );
+        });
   }
 }
