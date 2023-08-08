@@ -1,0 +1,130 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:gaff/api/apis.dart';
+import 'package:gaff/helper/dialogs.dart';
+import 'package:gaff/main.dart';
+import 'package:gaff/screens/home_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  _handleGoogleBtnClick() {
+    Dialogs.showProgressBar(context);
+    _signInWithGoogle().then((user) async {
+      Navigator.pop(context);
+
+      if (user != null) {
+        if ((await APIs.userExists())) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+        } else {
+          await APIs.createUser().then((value) {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          });
+        }
+      }
+    });
+  }
+
+  Future<UserCredential?> _signInWithGoogle() async {
+    try {
+      await InternetAddress.lookup('google.com');
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      return await APIs.auth.signInWithCredential(credential);
+    } catch (e) {
+      log('\n_signInWithGoogle: $e');
+      Dialogs.showSnackbar(
+          context, "Something Went Wrong! Check your Internet Connection");
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    mq = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Center(
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 100,),
+              Text(
+                "GAFF",
+                style: TextStyle(
+                    fontFamily: 'SKATERDUDES',
+                    fontSize: 55,
+                    color: Color.fromARGB(255, 43, 20, 255)),
+              ),
+              SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20,),
+                child: SizedBox(
+                  width: mq.width,
+                  height: 55,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      _handleGoogleBtnClick();
+                    },
+                    style: OutlinedButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: Color.fromARGB(255, 89, 180, 255),
+                      side: BorderSide.none, // Remove border
+                    ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 40),
+                          child: Image.asset(
+                            'assets/images/Google.png',
+                            height: 30,
+                          ),
+                        ),
+                        const Text(
+                          "Login with Google",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // SizedBox(height: 10,),
+                Text(
+                "Powered by 2kSoft\nUsing Flutter",
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

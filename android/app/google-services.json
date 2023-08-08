@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "483043320756",
+    "project_id": "gaff-15c42",
+    "storage_bucket": "gaff-15c42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483043320756:android:7e5afa00925ab0750188e1",
+        "android_client_info": {
+          "package_name": "com.example.gaff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483043320756-uo8imlm471octdv2t3babfunstmiqd8p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gaff",
+            "certificate_hash": "135a02a19da74a455a3b62ba7b8c42c5437d3195"
+          }
+        },
+        {
+          "client_id": "483043320756-910r4cqh1hf1bnhdrmrg9jrm2botjnpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5f3yD4O354HUConV_Eog-B54AxXAiCh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483043320756-8lan0nc87la7khpr62ifa7bduthq7jvh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "483043320756-qfqm2v4c5h4d4s9mo2ff3jtrgejaulrf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gaff"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
