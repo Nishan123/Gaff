@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:gaff/screens/chat_screen.dart';
 
 import '../models/chat_user.dart';
 
@@ -18,7 +19,9 @@ class _ChatUserCardState extends State<ChatUserCard> {
       margin: const EdgeInsets.only(top: 2),
       elevation: 0,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder:(_)=>ChatScreen(user: widget.user,)));
+        },
         child: ListTile(
             tileColor: Color.fromARGB(135, 209, 220, 226),
             leading: ClipRRect(
