@@ -9,7 +9,7 @@ late Size mq;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
@@ -28,16 +28,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Gaff',
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.blue,
-            iconTheme: IconThemeData(color: Colors.white),
-            centerTitle: true,
-            titleTextStyle:
-                TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-        useMaterial3: true,
-        fontFamily: "Avenir"
-      ),
-      home:  const SplashScreen(),
+          appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.blue,
+              iconTheme: IconThemeData(color: Colors.white),
+              centerTitle: true,
+              titleTextStyle:
+                  TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+          useMaterial3: true,
+          fontFamily: "Avenir"),
+      home: const SplashScreen(),
     );
   }
 }

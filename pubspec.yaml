@@ -27,6 +27,7 @@ dependencies:
   cloud_firestore: ^4.8.4
 
   #for signin auth feature
+  emoji_picker_flutter: ^1.6.1
   firebase_auth: ^4.7.2
 
   #for implementing firebase
