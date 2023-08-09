@@ -4,6 +4,7 @@ import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:gaff/api/apis.dart';
 import 'package:gaff/helper/dialogs.dart';
@@ -98,8 +99,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               _showBottomSheet();
                             },
                             icon: Icon(
-                              Icons.edit,
-                              color: Colors.black,
+                              IconsaxBold.edit,
+                              color: Colors.white,
                               size: 30,
                             ),
                           ),
@@ -133,23 +134,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             border: Border.all(
                                 color: Color.fromARGB(255, 0, 17, 255),
                                 width: 5)),
-                        child: TextFormField(
-                            initialValue: widget.user.name,
-                            onSaved: (val) => APIs.me.name = val ?? '',
-                            validator: (val) => val != null && val.isNotEmpty
-                                ? null
-                                : "Required Field",
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.black),
-                            decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                prefixIcon: Icon(
-                                  Icons.person,
-                                  color: Colors.black,
-                                ))),
+                        child: Center(
+                          child: TextFormField(
+                              initialValue: widget.user.name,
+                              onSaved: (val) => APIs.me.name = val ?? '',
+                              validator: (val) => val != null && val.isNotEmpty
+                                  ? null
+                                  : "Required Field",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.black),
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  prefixIcon: Icon(
+                                    IconsaxBold.profile_circle,
+                                    color: Colors.black,
+                                    size: 30,
+                                  ))),
+                        ),
                       ),
                       SizedBox(
                         height: 10,
@@ -165,23 +169,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             border: Border.all(
                                 color: Color.fromARGB(255, 0, 17, 255),
                                 width: 5)),
-                        child: TextFormField(
-                          onSaved: (val) => APIs.me.about = val ?? '',
-                          validator: (val) => val != null && val.isNotEmpty
-                              ? null
-                              : "Cannot be empty",
-                          initialValue: widget.user.about,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              prefixIcon: Icon(
-                                Icons.info,
-                                color: Colors.black,
-                              )),
+                        child: Center(
+                          child: TextFormField(
+                            onSaved: (val) => APIs.me.about = val ?? '',
+                            validator: (val) => val != null && val.isNotEmpty
+                                ? null
+                                : "Cannot be empty",
+                            initialValue: widget.user.about,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.black),
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                prefixIcon: Icon(
+                                  IconsaxBold.info_circle,
+                                  color: Colors.black,
+                                  size: 30,
+                                )),
+                          ),
                         ),
                       ),
                     ],
@@ -248,13 +255,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const Color.fromARGB(255, 140, 179, 0),
                           side: BorderSide.none, // Remove border
                         ),
-                        child: const Text(
-                          "LogOut",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(IconsaxOutline.logout,color: Colors.white,),
+                            SizedBox(width: 10),
+                            Text(
+                                "LogOut",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                          ],
+                        )
                       ),
                     ),
                   )

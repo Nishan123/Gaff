@@ -1,7 +1,7 @@
 // import 'dart:math';
 // import 'dart:developer' as developer;
 // import 'dart:convert';
-
+import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:gaff/api/apis.dart';
 import 'package:gaff/screens/profile_screen.dart';
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                   icon:
-                      Icon(_isSearching ? Icons.clear_rounded : Icons.search)),
+                      Icon(_isSearching ? Icons.clear_rounded : IconsaxOutline.search_normal)),
               IconButton(
                   onPressed: () {
                     Navigator.push(
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         MaterialPageRoute(
                             builder: (_) => ProfileScreen(user: APIs.me)));
                   },
-                  icon: const Icon(Icons.more_vert)),
+                  icon: const Icon(IconsaxOutline.profile_circle)),
             ],
           ),
           floatingActionButton: Padding(
@@ -105,7 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 // await GoogleSignIn().signOut();
               },
               child: Icon(
-                Icons.add_comment,
+                IconsaxBold.message_add_1,
+                size: 25,
                 color: Colors.white,
               ),
               shape: RoundedRectangleBorder(

@@ -28,6 +28,7 @@ dependencies:
 
   #for signin auth feature
   emoji_picker_flutter: ^1.6.1
+  ficonsax: ^0.0.3
   firebase_auth: ^4.7.2
 
   #for implementing firebase
