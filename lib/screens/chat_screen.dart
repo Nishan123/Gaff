@@ -2,8 +2,11 @@ import 'dart:io';
 import 'dart:developer' as developer;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
+import 'package:gaff/helper/my_date_util.dart';
 import 'package:gaff/models/message.dart';
+import 'package:gaff/screens/view_profile_screen.dart';
 import 'package:gaff/widgets/message_card.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -125,46 +128,71 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _appBar() {
     return InkWell(
-      onTap: () {},
-      child: Row(
-        children: [
-          const SizedBox(width: 60),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: CachedNetworkImage(
-              height: 45,
-              width: 45,
-              imageUrl: widget.user.image,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) =>
-                  const Icon(Icons.person_2_rounded),
-            ),
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.user.name,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                    fontFamily: 'Roboto',
-                    color: Colors.white),
-              ),
-              const Text(
-                'Last seen not availabe',
-                style: TextStyle(
-                    fontSize: 13, fontFamily: 'Roboto', color: Colors.white),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ViewProfileScreen(user: widget.user)));
+        },
+        child: StreamBuilder(
+          stream: APIs.getUserInfo(widget.user),
+          builder: (context, snapshot) {
+            final data = snapshot.data?.docs;
+
+            final list =
+                data?.map((e) => ChatUser.fromJson(e.data())).toList() ?? [];
+
+            return Row(
+              children: [
+                const SizedBox(width: 60),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: CachedNetworkImage(
+                    height: 45,
+                    width: 45,
+                    imageUrl:
+                        list.isNotEmpty ? list[0].image : widget.user.image,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.person_2_rounded),
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _list.isNotEmpty ? list[0].name : widget.user.name,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          fontFamily: 'Roboto',
+                          color: Colors.white),
+                    ),
+                    Text(
+                      list.isNotEmpty
+                          ? list[0].isOnline
+                              ? 'Online'
+                              : MyDateUtil.getLastActiveTime(
+                                  context: context,
+                                  lastActive: list[0].lastActive)
+                          : MyDateUtil.getLastActiveTime(
+                              context: context,
+                              lastActive: widget.user.lastActive),
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontFamily: 'Roboto',
+                          color: Colors.white),
+                    ),
+                  ],
+                )
+              ],
+            );
+          },
+        ));
   }
 
   Widget _chatInput() {
@@ -186,8 +214,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           _showEmoji = !_showEmoji;
                         });
                       },
-                      icon:const Icon(
-                        Icons.emoji_emotions_outlined,
+                      icon: Icon(
+                        IconsaxOutline.emoji_normal,
                         color: Colors.blueAccent,
                       )),
                   Expanded(
@@ -200,7 +228,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       });
                     },
                     keyboardType: TextInputType.multiline,
-                    decoration:const InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: "Type your Message....",
                         hintStyle: TextStyle(
                           color: Colors.blueAccent,
@@ -246,7 +274,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         });
                       }
                     },
-                    icon:const Icon(
+                    icon: const Icon(
                       Icons.camera_alt,
                       color: Colors.blueAccent,
                     ),
@@ -269,7 +297,7 @@ class _ChatScreenState extends State<ChatScreen> {
             },
             shape: CircleBorder(),
             child: Icon(
-              Icons.send,
+              IconsaxOutline.send_1,
               color: Colors.white,
               size: 28,
             ),

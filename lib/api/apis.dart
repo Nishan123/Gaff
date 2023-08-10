@@ -102,6 +102,23 @@ class APIs {
         .update({'image': me.image});
   }
 
+//for getting specific user info
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getUserInfo(
+      ChatUser chatUser) {
+    return firestore
+        .collection('users')
+        .where('id', isEqualTo: chatUser.id)
+        .snapshots();
+  }
+
+  // update online or last active status of user
+  static Future<void> updateActiveStatus(bool isOnline) async {
+    firestore.collection('users').doc(user.uid).update({
+      'is_online': isOnline,
+      'last_active': DateTime.now().millisecondsSinceEpoch.toString()
+    });
+  }
+
   ///************** Chat Screen Related APIs **************
 
   // chats (collection) --> conversation_id (doc) --> messages (collection) --> message (doc)
@@ -116,7 +133,7 @@ class APIs {
       ChatUser user) {
     return firestore
         .collection('chats/${getConversationID(user.id)}/messages/')
-        .orderBy('sent',descending: true)
+        .orderBy('sent', descending: true)
         .snapshots();
   }
 

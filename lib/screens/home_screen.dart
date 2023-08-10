@@ -1,12 +1,11 @@
-// import 'dart:math';
-// import 'dart:developer' as developer;
-// import 'dart:convert';
+
 import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gaff/api/apis.dart';
 import 'package:gaff/screens/profile_screen.dart';
 import 'package:gaff/widgets/chat_user_card.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart'
 
 import '../models/chat_user.dart';
 
@@ -24,8 +23,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    APIs.getSelfInfo();
     super.initState();
+    APIs.getSelfInfo();
+
+    //for setting user status to active
+    APIs.updateActiveStatus(true);
+
+    //for updating user active status according to lifecycle events
+    //resume -- active or online
+    //pause  -- inactive or offline
+    SystemChannels.lifecycle.setMessageHandler((message) {
+      if(APIs.auth.currentUser != null){
+        if (message.toString().contains('resume')) {
+          APIs.updateActiveStatus(true);
+        }
+        if (message.toString().contains('pause')) {
+          APIs.updateActiveStatus(false);
+        }
+      }
+    
+
+      return Future.value(message);
+    });
   }
 
   @override
@@ -83,8 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       _isSearching = !_isSearching;
                     });
                   },
-                  icon:
-                      Icon(_isSearching ? Icons.clear_rounded : IconsaxOutline.search_normal)),
+                  icon: Icon(_isSearching
+                      ? Icons.clear_rounded
+                      : IconsaxOutline.search_normal)),
               IconButton(
                   onPressed: () {
                     Navigator.push(

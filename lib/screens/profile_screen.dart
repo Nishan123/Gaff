@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ficonsax/ficonsax.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gaff/api/apis.dart';
 import 'package:gaff/helper/dialogs.dart';
@@ -136,29 +137,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 width: 5)),
                         child: Center(
                           child: TextFormField(
-                              initialValue: widget.user.name,
-                              onSaved: (val) => APIs.me.name = val ?? '',
-                              validator: (val) => val != null && val.isNotEmpty
-                                  ? null
-                                  : "Required Field",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.black),
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  prefixIcon: Icon(
-                                    IconsaxBold.profile_circle,
-                                    color: Colors.black,
-                                    size: 30,
-                                  ))),
+                            initialValue: widget.user.name,
+                            onSaved: (val) => APIs.me.name = val ?? '',
+                            validator: (val) => val != null && val.isNotEmpty
+                                ? null
+                                : "Required Field",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.black),
+                            decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                prefixIcon: Icon(
+                                  IconsaxBold.profile_circle,
+                                  color: Colors.black,
+                                  size: 30,
+                                )),
+                          ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(left: 20),
                         child: Text("About", style: TextStyle(fontSize: 17)),
                       ),
@@ -176,11 +178,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ? null
                                 : "Cannot be empty",
                             initialValue: widget.user.about,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                                 color: Colors.black),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
                                 prefixIcon: Icon(
@@ -193,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Padding(
@@ -226,50 +228,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 70),
+                  const SizedBox(height: 70),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: SizedBox(
                       height: 55,
                       width: MediaQuery.of(context).size.width,
                       child: OutlinedButton(
-                        onPressed: () async {
-                          Dialogs.showProgressBar(context);
-                          await APIs.auth.signOut().then((value) async {
-                            await GoogleSignIn().signOut().then((value) {
-                              //for hiding progress bar
-                              Navigator.pop(context);
+                          onPressed: () async {
+                            Dialogs.showProgressBar(context);
+                            await APIs.updateActiveStatus(false);
+                            await APIs.auth.signOut().then((value) async {
+                              await GoogleSignIn().signOut().then((value) {
+                                //for hiding progress bar
+                                Navigator.pop(context);
+                                APIs.auth = FirebaseAuth.instance;
 
-                              //for removing backstack of home screen
-                              Navigator.pop(context);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => LoginScreen()));
+                                //for removing backstack of home screen
+                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => LoginScreen()));
+                              });
                             });
-                          });
-                        },
-                        style: OutlinedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor:
-                              const Color.fromARGB(255, 140, 179, 0),
-                          side: BorderSide.none, // Remove border
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(IconsaxOutline.logout,color: Colors.white,),
-                            SizedBox(width: 10),
-                            Text(
+                          },
+                          style: OutlinedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor:
+                                const Color.fromARGB(255, 140, 179, 0),
+                            side: BorderSide.none, // Remove border
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                IconsaxOutline.logout,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
                                 "LogOut",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20),
                               ),
-                          ],
-                        )
-                      ),
+                            ],
+                          )),
                     ),
                   )
                 ],
@@ -308,7 +314,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           final ImagePicker picker = ImagePicker();
                           //pick an image
                           final XFile? image = await picker.pickImage(
-                              source: ImageSource.camera,imageQuality: 80);
+                              source: ImageSource.camera, imageQuality: 80);
                           if (image != null) {
                             developer.log('Image Path: ${image.path}');
 
@@ -332,7 +338,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           final ImagePicker picker = ImagePicker();
                           //pick an image
                           final XFile? image = await picker.pickImage(
-                              source: ImageSource.gallery,imageQuality: 80);
+                              source: ImageSource.gallery, imageQuality: 80);
                           if (image != null) {
                             developer.log(
                                 'Image Path: ${image.path} -- MineType: ${image.mimeType}');
