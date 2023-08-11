@@ -4,6 +4,7 @@ import 'package:gaff/api/apis.dart';
 import 'package:gaff/helper/my_date_util.dart';
 import 'package:gaff/models/message.dart';
 import 'package:gaff/screens/chat_screen.dart';
+import 'package:gaff/widgets/dialogs/profile_dialogs.dart';
 
 import '../models/chat_user.dart';
 
@@ -43,15 +44,20 @@ class _ChatUserCardState extends State<ChatUserCard> {
 
             return ListTile(
               tileColor: Color.fromARGB(135, 209, 220, 226),
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: CachedNetworkImage(
-                  height: 55,
-                  width: 55,
-                  imageUrl: widget.user.image,
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) =>
-                      const Icon(Icons.person_2_rounded),
+              leading: InkWell(
+                onTap: () {
+                  showDialog(context: context, builder: (_)=>ProfileDialog(user:widget.user,));
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: CachedNetworkImage(
+                    height: 55,
+                    width: 55,
+                    imageUrl: widget.user.image,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.person_2_rounded),
+                  ),
                 ),
               ),
               title: Text(
@@ -60,10 +66,11 @@ class _ChatUserCardState extends State<ChatUserCard> {
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
               subtitle: Text(
-                _message != null ? 
-                _message!.type == Type.image ?"Image....":
-                _message!.msg :
-                 widget.user.about,
+                _message != null
+                    ? _message!.type == Type.image
+                        ? "Image...."
+                        : _message!.msg
+                    : widget.user.about,
                 maxLines: 1,
               ),
               trailing: _message == null

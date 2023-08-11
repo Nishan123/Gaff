@@ -33,6 +33,7 @@ dependencies:
 
   #for implementing firebase
   firebase_core: ^2.15.0
+  firebase_messaging: ^14.6.5
   firebase_storage: ^11.2.5
   flutter:
     sdk: flutter
@@ -40,9 +41,11 @@ dependencies:
   flutter_launcher_icons: "^0.13.1"
 
   #for google signin feature
+  flutter_notification_channel: ^2.0.0
   google_sign_in: ^6.1.4
 
   #for picking profile picture
+  http: ^1.1.0
   image_picker: ^1.0.2
 
 flutter_launcher_icons:
