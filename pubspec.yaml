@@ -25,6 +25,8 @@ environment:
 dependencies:
   cached_network_image: ^3.2.3
   cloud_firestore: ^4.8.4
+  #for storing image to local storage
+  gallery_saver: ^2.3.2
 
   #for signin auth feature
   emoji_picker_flutter: ^1.6.1
@@ -45,7 +47,7 @@ dependencies:
   google_sign_in: ^6.1.4
 
   #for picking profile picture
-  http: ^1.1.0
+  http: ^0.13.3
   image_picker: ^1.0.2
 
 flutter_launcher_icons:
@@ -84,19 +86,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-  #   - images/a_dot_ham.jpeg
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
+  
   fonts:
     - family: SKATERDUDES
       fonts:

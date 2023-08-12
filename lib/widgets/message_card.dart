@@ -1,9 +1,13 @@
 import 'dart:developer' as developer;
+import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gaff/api/apis.dart';
+import 'package:gaff/helper/dialogs.dart';
 import 'package:gaff/helper/my_date_util.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 
 import '../models/message.dart';
 
@@ -20,11 +24,10 @@ class _MessageCardState extends State<MessageCard> {
   Widget build(BuildContext context) {
     bool isMe = APIs.user.uid == widget.message.fromId;
     return InkWell(
-      onLongPress: () {
-        _showBottomSheet(isMe);
-      },
-      child: isMe ? _greenMessage() : __blueMessage(),
-    );
+        onLongPress: () {
+          _showBottomSheet(isMe);
+        },
+        child: isMe ? _greenMessage() : __blueMessage());
   }
 
 //Sender message
@@ -61,7 +64,7 @@ class _MessageCardState extends State<MessageCard> {
                         placeholder: (context, url) => const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: CircularProgressIndicator(
-                            strokeWidth: 3,
+                            strokeWidth: 10,
                           ),
                         ),
                         imageUrl: widget.message.msg,
@@ -148,7 +151,7 @@ class _MessageCardState extends State<MessageCard> {
   void _showBottomSheet(bool isMe) {
     showModalBottomSheet(
         context: context,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(30), topLeft: Radius.circular(30))),
         builder: (_) {
@@ -164,64 +167,158 @@ class _MessageCardState extends State<MessageCard> {
                   color: Colors.grey,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
+
+              //for copying text
               widget.message.type == Type.text
                   ? _OptionItem(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.copy,
                         color: Colors.blue,
                       ),
-                      name: "Copy",
-                      onTap: () {})
+                      name: "Copy Text",
+                      onTap: () async {
+                        await Clipboard.setData(
+                                ClipboardData(text: widget.message.msg))
+                            .then((value) {
+                          Navigator.pop(context);
+                          Dialogs.showSnackbar(context, 'Text Copied!');
+                        });
+                      })
+                  //for image save
                   : _OptionItem(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.download,
                         color: Colors.blue,
                       ),
                       name: "Save image",
-                      onTap: () {}),
-            
+                      onTap: () async {
+                        try {
+                          log('Image Url: ${widget.message.msg}');
+                          await GallerySaver.saveImage(widget.message.msg,
+                                  albumName: "Gaff")
+                              .then((success) {
+                            Navigator.pop(context);
+                            if (success != null && success) {
+                              Dialogs.showSnackbar(context, 'Image Saved');
+                            }
+                          });
+                        } catch (e) {
+                          log('Error $e');
+                        }
+                      }),
+              if (widget.message.type == Type.text && isMe)
 
-              if(widget.message.type==Type.text && isMe)
-              _OptionItem(
-                  icon: Icon(
-                    Icons.edit,
-                    color: Colors.red,
-                  ),
-                  name: "Edit",
-                  onTap: () {}),
-
-                  if(isMe)
-              _OptionItem(
-                  icon: Icon(
-                    Icons.delete_outline,
-                    color: Colors.red,
-                  ),
-                  name: "Delete",
-                  onTap: () {}),
+                //for edit msg
+                _OptionItem(
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.red,
+                    ),
+                    name: "Edit",
+                    onTap: () {
+                      Navigator.pop(context);
+                      _showMessageUpdateDialog();
+                    }),
+              if (isMe)
+                _OptionItem(
+                    icon: Icon(
+                      Icons.delete_outline,
+                      color: Colors.red,
+                    ),
+                    name: "Delete",
+                    onTap: () async {
+                      await APIs.deleteMessage(widget.message).then((value) {
+                        Navigator.pop(context);
+                      });
+                    }),
               const Divider(
                 indent: 20,
                 endIndent: 20,
                 height: 10,
                 color: Colors.black54,
               ),
+
               _OptionItem(
                   icon: Icon(
                     Icons.done_all,
                     color: Colors.blue,
                   ),
-                  name: "Send At:",
+                  name:
+                      "Send At: ${MyDateUtil.getMessageTime(context: context, time: widget.message.sent)}",
                   onTap: () {}),
               _OptionItem(
                   icon: Icon(
                     Icons.remove_red_eye,
                     color: Colors.red,
                   ),
-                  name: "Read At:",
+                  name: widget.message.read.isEmpty
+                      ? "Not seen yet"
+                      : "Read At: ${MyDateUtil.getMessageTime(context: context, time: widget.message.sent)}",
                   onTap: () {}),
             ],
           );
         });
+  }
+
+  //dialog for updating message content
+  void _showMessageUpdateDialog() {
+    String updatedMsg = widget.message.msg;
+
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              contentPadding: const EdgeInsets.only(
+                  left: 24, right: 24, top: 20, bottom: 10),
+
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+
+              //title
+              title: Row(
+                children: const [
+                  Icon(
+                    Icons.edit,
+                    color: Colors.blue,
+                    size: 25,
+                  ),
+                  Text('  Edit Message')
+                ],
+              ),
+
+              //content
+              content: TextFormField(
+                initialValue: updatedMsg,
+                maxLines: null,
+                onChanged: (value) => updatedMsg = value,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+
+              actions: [
+                //cancel button
+                MaterialButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.red, fontSize: 16),
+                    )),
+
+                //update button
+                MaterialButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      APIs.updateMessage(widget.message, updatedMsg);
+                    },
+                    child: const Text(
+                      'Update',
+                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                    ))
+              ],
+            ));
   }
 }
 
@@ -235,7 +332,7 @@ class _OptionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => onTap(),
       child: Padding(
         padding: const EdgeInsets.only(left: 30, bottom: 9, top: 9),
         child: Row(

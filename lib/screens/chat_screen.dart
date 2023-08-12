@@ -27,7 +27,7 @@ class _ChatScreenState extends State<ChatScreen> {
   List<Message> _list = [];
 
   final _textController = TextEditingController();
-  bool _showEmoji = false, _isUploading = false;
+  bool _showEmoji = false;
 
   @override
   Widget build(BuildContext context) {
@@ -95,17 +95,17 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       }),
                 ),
-                if (_isUploading)
-                  const Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                      child: CircularProgressIndicator(
-                        strokeWidth: 1,
-                      ),
-                    ),
-                  ),
+                // if (_isUploading)
+                //   const Align(
+                //     alignment: Alignment.centerRight,
+                //     child: Padding(
+                //       padding:
+                //           EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                //       child: CircularProgressIndicator(
+                //         strokeWidth: 1,
+                //       ),
+                //     ),
+                //   ),
                 _chatInput(),
                 if (_showEmoji)
                   SizedBox(
@@ -244,12 +244,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           await picker.pickMultiImage(imageQuality: 70);
                       for (var i in images) {
                         setState(() {
-                          _isUploading = true;
                         });
                         developer.log('Image Path: ${i.path}');
                         await APIs.sendChatImage(widget.user, File(i.path));
                         setState(() {
-                          _isUploading = true;
                         });
                       }
                     },
@@ -270,7 +268,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
                         await APIs.sendChatImage(widget.user, File(image.path));
                         setState(() {
-                          _isUploading = false;
                         });
                       }
                     },
