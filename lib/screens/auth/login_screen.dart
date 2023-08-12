@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -5,9 +7,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gaff/api/apis.dart';
 import 'package:gaff/helper/dialogs.dart';
-import 'package:gaff/main.dart';
 import 'package:gaff/screens/home_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../main.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -29,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           await APIs.createUser().then((value) {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                context, MaterialPageRoute(builder: (_) => const HomeScreen()));
           });
         }
       }
@@ -73,10 +76,10 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
-              Text(
+              const Text(
                 "GAFF",
                 style: TextStyle(
                   fontFamily: 'SKATERDUDES',
@@ -84,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 20,
@@ -124,11 +127,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               // SizedBox(height: 10,),
-              Text(
-                "Made in Nepal\nUsing Flutter",
-                textAlign: TextAlign.center,
-                 style: TextStyle(color: Colors.white)
-              ),
+              const Text("Made in Nepal\nUsing Flutter",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white)),
             ],
           ),
         ),

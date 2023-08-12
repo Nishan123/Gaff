@@ -150,7 +150,7 @@ class _MessageCardState extends State<MessageCard> {
   void _showBottomSheet(bool isMe) {
     showModalBottomSheet(
         context: context,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(30), topLeft: Radius.circular(30))),
         builder: (_) {
@@ -210,7 +210,7 @@ class _MessageCardState extends State<MessageCard> {
 
                 //for edit msg
                 _OptionItem(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.edit,
                       color: Colors.red,
                     ),
@@ -221,7 +221,7 @@ class _MessageCardState extends State<MessageCard> {
                     }),
               if (isMe)
                 _OptionItem(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.delete_outline,
                       color: Colors.red,
                     ),
@@ -239,7 +239,7 @@ class _MessageCardState extends State<MessageCard> {
               ),
 
               _OptionItem(
-                  icon: Icon(
+                  icon:const  Icon(
                     Icons.done_all,
                     color: Colors.blue,
                   ),
@@ -247,7 +247,7 @@ class _MessageCardState extends State<MessageCard> {
                       "Send At: ${MyDateUtil.getMessageTime(context: context, time: widget.message.sent)}",
                   onTap: () {}),
               _OptionItem(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.remove_red_eye,
                     color: Colors.red,
                   ),
@@ -342,7 +342,7 @@ class _OptionItem extends StatelessWidget {
             Flexible(
                 child: Text(
               '    $name',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ))
           ],
         ),

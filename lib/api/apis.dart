@@ -147,12 +147,36 @@ class APIs {
         .set(chatUser.toJson());
   }
 
-  // for getting all users from firestore database
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers() {
+  // for getting id of only known users form firestore db
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getMyUsersId() {
     return firestore
         .collection('users')
-        .where('id', isNotEqualTo: user.uid)
+        .doc(user.uid)
+        .collection('my_users')
         .snapshots();
+  }
+
+  // for getting all users from firestore database
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers(
+      List<String> userIds) {
+    log('/nUserId:$userIds');
+    return firestore
+        .collection('users')
+        .where('id', whereIn:userIds.isEmpty
+        ?['']
+       : userIds)
+        .snapshots();
+  }
+
+  // for sending first message to recently added user
+  static Future<void> sendFirstMessage(
+      ChatUser chatUser, String msg, Type type) async {
+    await firestore
+        .collection('users')
+        .doc(chatUser.id)
+        .collection('my_users')
+        .doc(user.uid)
+        .set({}).then((value) => sendMessage(chatUser, msg, type));
   }
 
   // for updating user information

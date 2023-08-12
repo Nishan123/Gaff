@@ -210,7 +210,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       )),
                   Expanded(
                       child: TextField(
-                        style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white),
                     controller: _textController,
                     maxLines: null,
                     onTap: () {
@@ -272,11 +272,15 @@ class _ChatScreenState extends State<ChatScreen> {
             elevation: 0,
             padding: EdgeInsets.only(top: 8, bottom: 8, right: 8, left: 8),
             minWidth: 0,
-          
             onPressed: () {
               if (_textController.text.isNotEmpty) {
-                APIs.sendMessage(widget.user, _textController.text, Type.text);
-
+                if (_list.isEmpty) {
+                  APIs.sendFirstMessage(
+                      widget.user, _textController.text, Type.text);
+                } else {
+                  APIs.sendMessage(
+                      widget.user, _textController.text, Type.text);
+                }
                 _textController.text = "";
               }
             },
