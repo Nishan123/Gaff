@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       title: 'Gaff',
       theme: ThemeData(
           appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.blue,
+              backgroundColor: Color.fromARGB(255, 16, 16, 16),
               iconTheme: IconThemeData(color: Colors.white),
               centerTitle: true,
               titleTextStyle:

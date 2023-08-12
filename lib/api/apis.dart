@@ -50,15 +50,17 @@ class APIs {
   }
 
   //for sending push notifications
-   static Future<void> sendPushNotification(
+  static Future<void> sendPushNotification(
       ChatUser chatUser, String msg) async {
     try {
       final body = {
         "to": chatUser.pushToken,
-        "notification": {"title": me.name, "body": msg,"android_channel_id":"chats"},
-        "data":{
-          "some_data":"User ID: ${me.id}"
-        }
+        "notification": {
+          "title": me.name,
+          "body": msg,
+          "android_channel_id": "chats"
+        },
+        "data": {"some_data": "User ID: ${me.id}"}
       };
 
       var res = await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
@@ -78,6 +80,35 @@ class APIs {
   // for checking if user exists or not?
   static Future<bool> userExists() async {
     return (await firestore.collection('users').doc(user.uid).get()).exists;
+  }
+
+  // for adding an chat user for our conversation
+  static Future<bool> addChatUser(String email) async {
+    final data = await firestore
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+
+    log('data: ${data.docs}');
+
+    if (data.docs.isNotEmpty && data.docs.first.id != user.uid) {
+      //user exists
+
+      log('user exists: ${data.docs.first.data()}');
+
+      firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('my_users')
+          .doc(data.docs.first.id)
+          .set({});
+
+      return true;
+    } else {
+      //user doesn't exists
+
+      return false;
+    }
   }
 
   // for getting current user info
@@ -209,10 +240,8 @@ class APIs {
 
     final ref = firestore
         .collection('chats/${getConversationID(chatUser.id)}/messages/');
-    await ref
-        .doc(time)
-        .set(message.toJson())
-        .then((value) => sendPushNotification(chatUser,type== Type.text? msg:'Image'));
+    await ref.doc(time).set(message.toJson()).then((value) =>
+        sendPushNotification(chatUser, type == Type.text ? msg : 'Image'));
   }
 
   //update read status of message
@@ -252,6 +281,7 @@ class APIs {
     final imageUrl = await ref.getDownloadURL();
     await sendMessage(chatUser, imageUrl, Type.image);
   }
+
   //delete message
   static Future<void> deleteMessage(Message message) async {
     await firestore
@@ -263,6 +293,7 @@ class APIs {
       await storage.refFromURL(message.msg).delete();
     }
   }
+
   //update message
   static Future<void> updateMessage(Message message, String updatedMsg) async {
     await firestore

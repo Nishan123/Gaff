@@ -66,23 +66,30 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color.fromARGB(118, 122, 112, 100),
       body: Center(
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 100,),
+              SizedBox(
+                height: 100,
+              ),
               Text(
                 "GAFF",
                 style: TextStyle(
-                    fontFamily: 'SKATERDUDES',
-                    fontSize: 55,
-                    color: Color.fromARGB(255, 43, 20, 255)),
+                  fontFamily: 'SKATERDUDES',
+                  fontSize: 55,
+                  color: Colors.white,
+                ),
               ),
               SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20,),
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
                 child: SizedBox(
                   width: mq.width,
                   height: 55,
@@ -92,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     style: OutlinedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: Color.fromARGB(255, 89, 180, 255),
+                      backgroundColor: Colors.black,
                       side: BorderSide.none, // Remove border
                     ),
                     child: Row(
@@ -117,9 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               // SizedBox(height: 10,),
-                Text(
-                "Powered by 2kSoft\nUsing Flutter",
+              Text(
+                "Made in Nepal\nUsing Flutter",
                 textAlign: TextAlign.center,
+                 style: TextStyle(color: Colors.white)
               ),
             ],
           ),

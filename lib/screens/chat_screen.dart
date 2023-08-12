@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:developer' as developer;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:gaff/helper/my_date_util.dart';
 import 'package:gaff/models/message.dart';
@@ -46,6 +45,7 @@ class _ChatScreenState extends State<ChatScreen> {
             }
           },
           child: Scaffold(
+            backgroundColor: Color.fromARGB(118, 122, 112, 100),
             appBar: AppBar(
               toolbarHeight: 60,
               flexibleSpace: _appBar(),
@@ -87,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   "Say Hi! 👋",
                                   style: TextStyle(
                                       fontSize: 35,
-                                      color: Colors.black54,
+                                      color: Color.fromARGB(255, 197, 197, 197),
                                       fontWeight: FontWeight.bold),
                                 ),
                               );
@@ -95,17 +95,6 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       }),
                 ),
-                // if (_isUploading)
-                //   const Align(
-                //     alignment: Alignment.centerRight,
-                //     child: Padding(
-                //       padding:
-                //           EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                //       child: CircularProgressIndicator(
-                //         strokeWidth: 1,
-                //       ),
-                //     ),
-                //   ),
                 _chatInput(),
                 if (_showEmoji)
                   SizedBox(
@@ -202,7 +191,8 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: Card(
-              color: Colors.white30,
+              elevation: 0,
+              color: Color.fromARGB(77, 196, 196, 196),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0)),
               child: Row(
@@ -214,12 +204,13 @@ class _ChatScreenState extends State<ChatScreen> {
                           _showEmoji = !_showEmoji;
                         });
                       },
-                      icon: Icon(
-                        IconsaxOutline.emoji_normal,
-                        color: Colors.blueAccent,
+                      icon: const Icon(
+                        Icons.emoji_emotions_outlined,
+                        color: Colors.white70,
                       )),
                   Expanded(
                       child: TextField(
+                        style: TextStyle(color: Colors.white),
                     controller: _textController,
                     maxLines: null,
                     onTap: () {
@@ -231,7 +222,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     decoration: const InputDecoration(
                         hintText: "Type your Message....",
                         hintStyle: TextStyle(
-                          color: Colors.blueAccent,
+                          color: Colors.white70,
                         ),
                         border: InputBorder.none),
                   )),
@@ -243,17 +234,15 @@ class _ChatScreenState extends State<ChatScreen> {
                       final List<XFile> images =
                           await picker.pickMultiImage(imageQuality: 70);
                       for (var i in images) {
-                        setState(() {
-                        });
+                        setState(() {});
                         developer.log('Image Path: ${i.path}');
                         await APIs.sendChatImage(widget.user, File(i.path));
-                        setState(() {
-                        });
+                        setState(() {});
                       }
                     },
                     icon: const Icon(
                       Icons.image,
-                      color: Colors.blueAccent,
+                      color: Colors.white70,
                     ),
                   ),
 
@@ -267,13 +256,12 @@ class _ChatScreenState extends State<ChatScreen> {
                         developer.log('Image Path: ${image.path}');
 
                         await APIs.sendChatImage(widget.user, File(image.path));
-                        setState(() {
-                        });
+                        setState(() {});
                       }
                     },
                     icon: const Icon(
                       Icons.camera_alt,
-                      color: Colors.blueAccent,
+                      color: Colors.white70,
                     ),
                   ),
                 ],
@@ -284,7 +272,7 @@ class _ChatScreenState extends State<ChatScreen> {
             elevation: 0,
             padding: EdgeInsets.only(top: 8, bottom: 8, right: 8, left: 8),
             minWidth: 0,
-            color: Colors.green,
+          
             onPressed: () {
               if (_textController.text.isNotEmpty) {
                 APIs.sendMessage(widget.user, _textController.text, Type.text);
@@ -294,7 +282,7 @@ class _ChatScreenState extends State<ChatScreen> {
             },
             shape: CircleBorder(),
             child: Icon(
-              IconsaxOutline.send_1,
+              Icons.send,
               color: Colors.white,
               size: 28,
             ),

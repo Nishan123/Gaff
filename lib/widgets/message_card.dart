@@ -38,7 +38,7 @@ class _MessageCardState extends State<MessageCard> {
       developer.log('Message read updated');
     }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Flexible(
           child: Container(
@@ -64,7 +64,7 @@ class _MessageCardState extends State<MessageCard> {
                         placeholder: (context, url) => const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: CircularProgressIndicator(
-                            strokeWidth: 10,
+                            strokeWidth: 3,
                           ),
                         ),
                         imageUrl: widget.message.msg,
@@ -80,7 +80,7 @@ class _MessageCardState extends State<MessageCard> {
           child: Text(
             MyDateUtil.getFromattedTime(
                 context: context, time: widget.message.sent),
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 13, color: Colors.white),
           ),
         )
       ],
@@ -90,7 +90,7 @@ class _MessageCardState extends State<MessageCard> {
 //User message
   Widget _greenMessage() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 15),
@@ -101,8 +101,7 @@ class _MessageCardState extends State<MessageCard> {
               Text(
                 MyDateUtil.getFromattedTime(
                     context: context, time: widget.message.sent),
-                style:
-                    const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                style: const TextStyle(fontSize: 13, color: Colors.white),
               ),
             ],
           ),
@@ -275,8 +274,8 @@ class _MessageCardState extends State<MessageCard> {
                   borderRadius: BorderRadius.circular(20)),
 
               //title
-              title: Row(
-                children: const [
+              title: const Row(
+                children: [
                   Icon(
                     Icons.edit,
                     color: Colors.blue,
@@ -318,6 +317,7 @@ class _MessageCardState extends State<MessageCard> {
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ))
               ],
+              actionsAlignment: MainAxisAlignment.spaceBetween,
             ));
   }
 }

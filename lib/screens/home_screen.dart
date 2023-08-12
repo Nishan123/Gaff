@@ -1,8 +1,8 @@
-
 import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gaff/api/apis.dart';
+import 'package:gaff/helper/dialogs.dart';
 import 'package:gaff/screens/profile_screen.dart';
 import 'package:gaff/widgets/chat_user_card.dart';
 // import 'package:google_sign_in/google_sign_in.dart'
@@ -26,13 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     APIs.getSelfInfo();
 
-    
-
     //for updating user active status according to lifecycle events
     //resume -- active or online
     //pause  -- inactive or offline
     SystemChannels.lifecycle.setMessageHandler((message) {
-      if(APIs.auth.currentUser != null){
+      if (APIs.auth.currentUser != null) {
         if (message.toString().contains('resume')) {
           APIs.updateActiveStatus(true);
         }
@@ -40,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
           APIs.updateActiveStatus(false);
         }
       }
-    
 
       return Future.value(message);
     });
@@ -62,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         child: Scaffold(
+          backgroundColor: const Color.fromARGB(118, 103, 103, 103),
           appBar: AppBar(
             title: _isSearching
                 ? TextField(
@@ -117,11 +115,10 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: FloatingActionButton(
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.black,
               elevation: 0,
-              onPressed: () async {
-                // await APIs.auth.signOut();
-                // await GoogleSignIn().signOut();
+              onPressed: () {
+                _addChatUserDialog();
               },
               child: Icon(
                 IconsaxBold.message_add_1,
@@ -191,5 +188,75 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  //dialog for adding user
+  void _addChatUserDialog() {
+    String email = '';
+
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              contentPadding: const EdgeInsets.only(
+                  left: 24, right: 24, top: 20, bottom: 10),
+
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+
+              //title
+              title: const Row(
+                children: [
+                  Icon(
+                    IconsaxBold.profile_add,
+                    color: Colors.blue,
+                    size: 25,
+                  ),
+                  Text('  Add Email')
+                ],
+              ),
+
+              //content
+              content: TextFormField(
+                maxLines: null,
+                onChanged: (value) => email = value,
+                decoration: InputDecoration(
+                    prefixIcon: Icon(IconsaxOutline.add),
+                    hintText: 'eg : example@gmail.com',
+                    hintMaxLines: 1,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+
+              actions: [
+              
+                //cancel button
+                MaterialButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.red, fontSize: 16),
+                    )),
+
+                //add button
+                MaterialButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      if (email.isEmpty)
+                        APIs.addChatUser(email).then((value) {
+                          if (!value) {
+                            Dialogs.showSnackbar(
+                                context, "User does not Exist!");
+                          }
+                        });
+                    },
+                    child: const Text(
+                      'Add User',
+                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                    ))
+              ],
+              actionsAlignment: MainAxisAlignment.spaceBetween,
+            ));
   }
 }

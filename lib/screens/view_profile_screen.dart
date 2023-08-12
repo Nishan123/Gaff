@@ -18,13 +18,14 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+       backgroundColor: Color.fromARGB(118, 122, 112, 100),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Joined on: '),
+            Text('Joined on: ',style: TextStyle(color: Colors.white),),
             Text(
               MyDateUtil.getLastMessageTime(
-                  context: context, time: widget.user.createdAt,showYear: true),
+                  context: context, time: widget.user.createdAt,showYear: true),style: TextStyle(color: Colors.white),
             ),
           ],
         ),
@@ -41,7 +42,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: const Color.fromARGB(255, 0, 17, 255),
+                      color: Colors.white,
                       width: 5,
                     ),
                     borderRadius: BorderRadius.circular(100),
@@ -65,7 +66,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                 ),
                 Text(
                   widget.user.email,
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16,color: Colors.white),
                 ),
                 SizedBox(height: 30),
                 Row(
@@ -75,12 +76,12 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                     Text(
                       'Name : ',
                       style:
-                          TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 25,color: Colors.white),
                     ),
                     Text(
                       widget.user.name,
                       style:
-                          TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 20,color: Colors.white),
                     ),
                   ],
                 ),
@@ -91,12 +92,12 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                     Text(
                       'About : ',
                       style:
-                          TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 25,color: Colors.white),
                     ),
                     Text(
                       widget.user.about,
                       style:
-                          TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 20,color: Colors.white),
                     ),
                   ],
                 ),

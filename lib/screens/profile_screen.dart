@@ -32,8 +32,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        
+        backgroundColor: Color.fromARGB(118, 122, 112, 100),
         appBar: AppBar(
-          title: const Text("Profile"),
+          title: const Text("Profile",),
         ),
         body: Form(
           key: _formKey,
@@ -49,10 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _image != null
                           ? Container(
                               decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: const Color.fromARGB(255, 0, 17, 255),
-                                  width: 5,
-                                ),
+                                
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: ClipRRect(
@@ -68,13 +67,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           : Container(
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: const Color.fromARGB(255, 0, 17, 255),
+                                  color: Colors.white,
                                   width: 5,
                                 ),
-                                borderRadius: BorderRadius.circular(100),
+                                borderRadius: BorderRadius.circular(130),
                               ),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
+                                borderRadius: BorderRadius.circular(130),
                                 child: CachedNetworkImage(
                                   height: 180,
                                   width: 180,
@@ -99,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onPressed: () {
                               _showBottomSheet();
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               IconsaxBold.edit,
                               color: Colors.white,
                               size: 30,
@@ -115,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Text(
                     widget.user.email,
                     style: const TextStyle(
-                        fontWeight: FontWeight.w900, fontSize: 19),
+                        fontWeight: FontWeight.w900, fontSize: 19,color: Colors.white),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -125,7 +124,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: EdgeInsets.only(left: 20),
                         child: Text(
                           "Name",
-                          style: TextStyle(fontSize: 17),
+                          style: TextStyle(fontSize: 17,color: Color.fromARGB(255, 142, 142, 142)),
+
                         ),
                       ),
                       Container(
@@ -133,8 +133,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 70,
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: Color.fromARGB(255, 0, 17, 255),
-                                width: 5)),
+                                color: Colors.white,
+                                width: 4)),
                         child: Center(
                           child: TextFormField(
                             initialValue: widget.user.name,
@@ -145,13 +145,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: Colors.black),
+                                color: Colors.white),
                             decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
                                 prefixIcon: Icon(
                                   IconsaxBold.profile_circle,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   size: 30,
                                 )),
                           ),
@@ -162,15 +162,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const Padding(
                         padding: EdgeInsets.only(left: 20),
-                        child: Text("About", style: TextStyle(fontSize: 17)),
+                        child: Text("About", style: TextStyle(fontSize: 17,color: Color.fromARGB(255, 142, 142, 142))),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 20, right: 20),
                         height: 70,
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: Color.fromARGB(255, 0, 17, 255),
-                                width: 5)),
+                                color: Colors.white,
+                                width: 4)),
                         child: Center(
                           child: TextFormField(
                             onSaved: (val) => APIs.me.about = val ?? '',
@@ -181,13 +181,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: Colors.black),
+                                color: Colors.white),
                             decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
                                 prefixIcon: Icon(
-                                  IconsaxBold.info_circle,
-                                  color: Colors.black,
+                                  IconsaxBold.heart_circle,
+                                  color: Colors.white,
                                   size: 30,
                                 )),
                           ),
@@ -215,7 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                         style: OutlinedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: Color.fromARGB(255, 89, 180, 255),
+                          backgroundColor: Color.fromARGB(255, 29, 29, 29),
                           side: BorderSide.none, // Remove border
                         ),
                         child: const Text(
@@ -228,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 70),
+                  const SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: SizedBox(
@@ -256,10 +256,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: OutlinedButton.styleFrom(
                             elevation: 0,
                             backgroundColor:
-                                const Color.fromARGB(255, 140, 179, 0),
+                                Color.fromARGB(255, 91, 91, 91),
                             side: BorderSide.none, // Remove border
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(

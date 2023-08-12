@@ -22,6 +22,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.transparent,
       margin: const EdgeInsets.only(top: 2),
       elevation: 0,
       child: InkWell(
@@ -43,7 +44,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
             if (list.isNotEmpty) _message = list[0];
 
             return ListTile(
-              tileColor: Color.fromARGB(135, 209, 220, 226),
+             
               leading: InkWell(
                 onTap: () {
                   showDialog(context: context, builder: (_)=>ProfileDialog(user:widget.user,));
@@ -63,7 +64,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
               title: Text(
                 widget.user.name,
                 style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 17,color: Colors.white),
               ),
               subtitle: Text(
                 _message != null
@@ -72,6 +73,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                         : _message!.msg
                     : widget.user.about,
                 maxLines: 1,
+                style: TextStyle(color: const Color.fromARGB(255, 197, 197, 197)),
               ),
               trailing: _message == null
                   ? null
@@ -86,7 +88,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                       : Text(
                           MyDateUtil.getLastMessageTime(
                               context: context, time: _message!.sent),
-                          style: TextStyle(color: Colors.black45),
+                          style: TextStyle(color: Colors.white),
                         ),
             );
           },

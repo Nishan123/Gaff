@@ -38,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: Color.fromARGB(118, 122, 112, 100),
       body: Center(
         child: SafeArea(
           child: Column(
@@ -52,12 +53,13 @@ class _SplashScreenState extends State<SplashScreen> {
                 style: TextStyle(
                     fontSize: 55,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 43, 20, 255),
+                    color: Colors.white,
                     fontFamily: 'SKATERDUDES'),
               ),
               Text(
-                "Powered by 2kSoft\nUsing Flutter",
+                "Made in Nepal \nUsing Flutter",
                 textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
               ),
             ],
           ),
