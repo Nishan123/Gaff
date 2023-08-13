@@ -15,6 +15,10 @@ This is a lightweight chat app built using Flutter and Firebase. The app has a s
 - Edit and delete messages
 - Simple and minimalist UI design
 
+## Download
+👉For 32 bit android 
+👉For 64 bit android
+
 ## Getting Started
 
 To get started with this app, you will need to have Flutter installed on your machine. You can follow the [official installation guide](https://flutter.dev/docs/get-started/install) to set up Flutter on your machine.
