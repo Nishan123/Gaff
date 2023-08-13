@@ -16,8 +16,7 @@ This is a lightweight chat app built using Flutter and Firebase. The app has a s
 - Simple and minimalist UI design ✅
 
 ## Download
-👉For 32 bit android click here https://drive.google.com/file/d/1gd9-r_xeZIW-D-qSnmN7VwmNzq6FdkX4/view?usp=drive_link                                                                                                                                                                                          
-👉For 64 bit android chick here https://drive.google.com/file/d/1EZVnfOOVzmwImN9krZ2Y94YfYTy4_Gyr/view?usp=drive_link
+👉For 32 bit android click here https://www.dropbox.com/scl/fi/w0y89264tb6lby6wjnizc/app-arm64-v8a-release.apk?rlkey=jb4a3tmj4d67yqz6knihzx0fd&dl=0 
 
 ## Getting Started
 
