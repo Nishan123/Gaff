@@ -28,6 +28,6 @@ jobs:
            with:
             artifacts: "build/app/output/apk/debug/*"
             tag: v0.0.1
-            token: ${{ secrets.TOKEN }}
+            token: ${{secrets.GITHUB_TOKEN}}
 
 
