@@ -10,10 +10,13 @@ This is a lightweight chat app built using Flutter and Firebase. The app has a s
 
 ## Features
 
-- Send and receive messages in real-time
-- Send and receive images
-- Edit and delete messages
-- Simple and minimalist UI design
+- Send and receive messages in real-time ✅
+- Send and receive images ✅
+- Edit and delete messages ✅
+- Simple and minimalist UI design ✅
+
+## Download
+👉For 64 bit android click here https://www.dropbox.com/scl/fi/w0y89264tb6lby6wjnizc/app-arm64-v8a-release.apk?rlkey=jb4a3tmj4d67yqz6knihzx0fd&dl=0 
 
 ## Getting Started
 
