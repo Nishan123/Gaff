@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     autofocus: true,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     onChanged: (val) {
                       //search Logic
                       _searchList.clear();
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     },
                   )
-                : Text(
+                : const Text(
                     "Gaff",
                     style: TextStyle(fontFamily: 'SKATERDUDES'),
                   ),
@@ -115,13 +115,13 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 _addChatUserDialog();
               },
-              child: Icon(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100)),
+              child:  const Icon(
                 IconsaxBold.message_add_1,
                 size: 25,
                 color: Colors.white,
               ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100)),
             ),
           ),
           body: StreamBuilder(
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: _isSearching
                                     ? _searchList.length
                                     : _list.length,
-                                padding: EdgeInsets.only(top: 10),
+                                padding: const EdgeInsets.only(top: 10),
                                 physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return ChatUserCard(

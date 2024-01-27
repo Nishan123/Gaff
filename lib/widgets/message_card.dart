@@ -156,10 +156,10 @@ class _MessageCardState extends State<MessageCard> {
         builder: (_) {
           return ListView(
             shrinkWrap: true,
-            padding: EdgeInsets.only(top: 20, bottom: 60),
+            padding: const EdgeInsets.only(top: 20, bottom: 60),
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 100),
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
                 height: 4,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),

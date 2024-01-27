@@ -32,10 +32,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        
-        backgroundColor: Color.fromARGB(118, 122, 112, 100),
+        backgroundColor: const Color.fromARGB(118, 122, 112, 100),
         appBar: AppBar(
-          title: const Text("Profile",),
+          title: const Text(
+            "Profile",
+          ),
         ),
         body: Form(
           key: _formKey,
@@ -51,7 +52,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _image != null
                           ? Container(
                               decoration: BoxDecoration(
-                                
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: ClipRRect(
@@ -92,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         right: 0,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 151, 149, 255),
+                              color: const Color.fromARGB(255, 151, 149, 255),
                               borderRadius: BorderRadius.circular(40)),
                           child: IconButton(
                             onPressed: () {
@@ -114,27 +114,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Text(
                     widget.user.email,
                     style: const TextStyle(
-                        fontWeight: FontWeight.w900, fontSize: 19,color: Colors.white),
+                        fontWeight: FontWeight.w900,
+                        fontSize: 19,
+                        color: Colors.white),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(left: 20),
                         child: Text(
                           "Name",
-                          style: TextStyle(fontSize: 17,color: Color.fromARGB(255, 142, 142, 142)),
-
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Color.fromARGB(255, 142, 142, 142)),
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(left: 20, right: 20),
                         height: 70,
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.white,
-                                width: 4)),
+                            border: Border.all(color: Colors.white, width: 4)),
                         child: Center(
                           child: TextFormField(
                             initialValue: widget.user.name,
@@ -162,15 +163,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const Padding(
                         padding: EdgeInsets.only(left: 20),
-                        child: Text("About", style: TextStyle(fontSize: 17,color: Color.fromARGB(255, 142, 142, 142))),
+                        child: Text("About",
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: Color.fromARGB(255, 142, 142, 142))),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 20, right: 20),
+                        margin: const EdgeInsets.only(left: 20, right: 20),
                         height: 70,
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.white,
-                                width: 4)),
+                            border: Border.all(color: Colors.white, width: 4)),
                         child: Center(
                           child: TextFormField(
                             onSaved: (val) => APIs.me.about = val ?? '',
@@ -215,7 +217,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                         style: OutlinedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: Color.fromARGB(255, 29, 29, 29),
+                          backgroundColor:
+                              const Color.fromARGB(255, 29, 29, 29),
                           side: BorderSide.none, // Remove border
                         ),
                         child: const Text(
@@ -249,14 +252,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => LoginScreen()));
+                                        builder: (_) => const LoginScreen()));
                               });
                             });
                           },
                           style: OutlinedButton.styleFrom(
                             elevation: 0,
                             backgroundColor:
-                                Color.fromARGB(255, 91, 91, 91),
+                                const Color.fromARGB(255, 91, 91, 91),
                             side: BorderSide.none, // Remove border
                           ),
                           child: const Row(
@@ -296,7 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         builder: (_) {
           return ListView(
             shrinkWrap: true,
-            padding: EdgeInsets.only(top: 20, bottom: 100),
+            padding: const EdgeInsets.only(top: 20, bottom: 100),
             children: [
               const Text(
                 "Choose your profile Picture",
@@ -363,5 +366,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         });
   }
-
 }

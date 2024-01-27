@@ -55,7 +55,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                     height: 55,
                     width: 55,
                     imageUrl: widget.user.image,
-                    placeholder: (context, url) => CircularProgressIndicator(),
+                    placeholder: (context, url) => const CircularProgressIndicator(),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.person_2_rounded),
                   ),
@@ -73,7 +73,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                         : _message!.msg
                     : widget.user.about,
                 maxLines: 1,
-                style: TextStyle(color: const Color.fromARGB(255, 197, 197, 197)),
+                style: const TextStyle(color: Color.fromARGB(255, 197, 197, 197)),
               ),
               trailing: _message == null
                   ? null
@@ -88,7 +88,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                       : Text(
                           MyDateUtil.getLastMessageTime(
                               context: context, time: _message!.sent),
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
             );
           },

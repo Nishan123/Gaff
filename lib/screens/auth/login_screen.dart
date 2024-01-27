@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Once signed in, return the UserCredential
       return await APIs.auth.signInWithCredential(credential);
     } catch (e) {
-      log('\n_signInWithGoogle: $e');
+      log('\n_Google: $e');
       Dialogs.showSnackbar(
           context, "Something Went Wrong! Check your Internet Connection");
     }
@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromARGB(118, 122, 112, 100),
+      backgroundColor: const Color.fromARGB(118, 122, 112, 100),
       body: Center(
         child: SafeArea(
           child: Column(

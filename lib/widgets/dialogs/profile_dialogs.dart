@@ -24,7 +24,7 @@ class ProfileDialog extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10),
                 child: Text(
                   user.name,
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
             ),
@@ -49,7 +49,7 @@ class ProfileDialog extends StatelessWidget {
             Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
-                    padding: EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(0),
                     onPressed: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -57,7 +57,7 @@ class ProfileDialog extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (_) => ViewProfileScreen(user: user)));
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.info_outline,
                       color: Colors.black,
                     )))
